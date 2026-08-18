@@ -51,3 +51,4 @@ python run.py <input-dir> <output-dir>
 | 20 | 14,376,897 | 10 | 6400 | **35.34** | 0.9343 |
 | **10** | **7,350,654** | 10 | 6400 | **35.03** | **0.9379** |
 | 5 | 3,753,539 | 10 | 6400 | 34.83 | 0.9169 |
+All the models were trained using 2560 (80%) images for training and 640 (20%) images for testing. The PSNR and SSIM are calculated for the testing images. The RRDB with 23 blocks is considered as the baseline model. The NRSRGAN model with 20, 10, and 5 RRDB blocks achieves 13.93%, 55.99%, and 77.53% reductions in the number of parameters, respectively. The corresponding PSNR changes are a 0.66% increase, 0.23% decrease, and 1.60% decrease, while SSIM decreases by 1.17%, 0.79%, and 1.59%, respectively, compared with the 23-RRDB model. From the above results the model with 10 RRBD blocks performs better in terms of PSNR, SSIM and less number of parameters
