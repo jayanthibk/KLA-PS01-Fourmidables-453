@@ -3,10 +3,11 @@ Microscopic images used to detect semiconductor fabrication defects suffer from 
 # i4C x KLA Hackathon 2026 (SEMICON India 2026) — AI-Based Restoration of Degraded Images for Semiconductor Inspection
 # Team
 |Name|Contact| <br>
-|||
-|||
-|||
-|||
+|Jayanthi B|jayanthib1995@yahoo.com| <br>
+|Anitha S|ssanithasvce@gmail.com| <br>       
+|Selva Sundary M|selvasundary26@gmail.com|<br>
+|Giridharan M |giridharan7482@gmail.com| <br>
+
 College : National Institute of Technology Puducherry
 # Problem 
 # Approach
