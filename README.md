@@ -10,75 +10,17 @@ Microscopic images used to detect semiconductor fabrication defects suffer from 
 
 College : National Institute of Technology Puducherry
 # Problem 
-# Approach
-# Results
+Challenge : Semiconductor inspection relies on microscopic images to identify critical defects. Speckle/Gaussian noise and 2×/4× spatial resolution loss can obscure fine structures, edges and defect-level details, reducing inspection reliability. Hence, restoring degraded semiconductor inspection images with high structural fidelity — reducing noise and recovering resolution without compromising critical defect details is essential.
 
-# Real-ESRGAN x2 Image Restoration
+# Real-World Impact 
+A small loss of structural information or a single corrupted region can make critical defects difficult to distinguish, potentially affecting inspection accuracy, quality control and manufacturing yield. This AI based solution for restoration helps increase the yield and quality of the IC. 
+
 # Repository Structure
-team_name/
-│
-├── run.py
-├── requirements.txt
-├── README.md
-│
-└── models/
-    └── RealESRGAN_x2_trained_generator.pth
-##
-# Requirements
-Python 3.x
-PyTorch
-NVIDIA GPU with CUDA support recommended
-NumPy
-BasicSR
+mkdir team_name
+cd team_name
 
-The model weights are included in the models/ directory. No model download or Internet connection is required during inference.
+mkdir models
 
-# Input
-
-The program accepts a directory containing .npy files.
-
-Each input is expected to represent a grayscale low-resolution image.
-
-Example:
-
-input/
-├── 000001.npy
-├── 000002.npy
-├── 000003.npy
-└── ...
-# Output
-
-The program creates the output directory automatically and generates one .npy file for every input file.
-
-The output:
-
-Preserves the input filename.
-Is grayscale.
-Has shape (H, W).
-Contains float32 values.
-Contains values in the range [0, 1].
-Contains no NaN or Inf values.
-Has the required 2× target resolution.
-
-Example:
-
-output/
-├── 000001.npy
-├── 000002.npy
-├── 000003.npy
-└── ...
-
-# Model
-
-The restoration network is based on Real-ESRGAN/RRDBNet.
-
-Model configuration:
-
-Input channels : 3
-Output channels: 3
-Features       : 64
-RRDB blocks    : 10
-Growth channels: 32
-Scale          : ×2
-
-The discriminator is not required during inference.
+touch run.py
+touch requirements.txt
+touch README.md
