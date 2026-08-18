@@ -4,7 +4,7 @@ Microscopic images used to detect semiconductor fabrication defects suffer from 
 # Team
 |Name|Contact| <br>
 |Jayanthi B|jayanthib1995@yahoo.com| <br>
-|Anitha S|ssanithasvce@gmail.com| <br>       
+|Anitha S|ssanithasvce@gmail.com| <br>    
 |Selva Sundary M|selvasundary26@gmail.com|<br>
 |Giridharan M |giridharan7482@gmail.com| <br>
 
@@ -18,7 +18,7 @@ A small loss of structural information or a single corrupted region can make cri
 ## Project Structure
 
 ```text
-team_name/
+Fourmidables-453/
 ├── run.py
 ├── requirements.txt
 ├── README.md
@@ -32,4 +32,10 @@ team_name/
 !git clone https://github.com/xinntao/Real-ESRGAN.git
 
 %cd /content/Real-ESRGAN
+```
+## Installation Files
+```text
+!pip install -q basicsr facexlib gfpgan
+!pip install -q -r requirements.txt
+!python setup.py develop
 ```
