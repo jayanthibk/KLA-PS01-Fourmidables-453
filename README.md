@@ -1,3 +1,3 @@
 # KLA-PS01-Fourmidables-453
-Microscopic images used for Semiconductor inspection system suffer from Gaussian noise, speckle noise and spatial resolution degradation. This project addresses the problem using AI-based image restoration techniques that jointly aim to suppress speckle noise and recover the lost spatial details of low-resolution inspection images using NRSRGAN. 
-# i4C x KLA SemiCon AI Hackathon — Problem Statement 01: AI-Based Restoration of Degraded Images
+Microscopic images used to detect semiconductor fabrication defects suffer from Gaussian noise, speckle, and degraded spatial resolution. This project implements an AI-driven image restoration pipeline using NRSRGAN. The approach jointly eliminates speckle noise and recovers lost high-resolution details from images. 
+# i4C x KLA Hackathon 2026 (SEMICON India 2026) — AI-Based Restoration of Degraded Images for Semiconductor Inspection
