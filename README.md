@@ -39,3 +39,7 @@ Fourmidables-453/
 !pip install -q -r requirements.txt
 !python setup.py develop
 ```
+## run
+```text
+python run.py <input-dir> <output-dir>
+```
