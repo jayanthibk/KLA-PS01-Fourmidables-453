@@ -15,12 +15,13 @@ Challenge : Semiconductor inspection relies on microscopic images to identify cr
 # Real-World Impact 
 A small loss of structural information or a single corrupted region can make critical defects difficult to distinguish, potentially affecting inspection accuracy, quality control and manufacturing yield. This AI based solution for restoration helps increase the yield and quality of the IC. 
 
-# Repository Structure
-mkdir team_name
-cd team_name
+## Project Structure
 
-mkdir models
-
-touch run.py
-touch requirements.txt
-touch README.md
+```text
+team_name/
+├── run.py
+├── requirements.txt
+├── README.md
+└── models/
+    └── RealESRGAN_x2_trained_generator.pth
+```
