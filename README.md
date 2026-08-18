@@ -24,7 +24,7 @@ team_name/
 │
 └── models/
     └── RealESRGAN_x2_trained_generator.pth
-
+##
 # Requirements
 Python 3.x
 PyTorch
