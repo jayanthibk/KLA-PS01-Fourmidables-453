@@ -13,9 +13,7 @@ College : National Institute of Technology Puducherry
 # Results
 
 # Real-ESRGAN x2 Image Restoration
-## Repository Structure
-
-```text
+# Repository Structure
 team_name/
 │
 ├── run.py
