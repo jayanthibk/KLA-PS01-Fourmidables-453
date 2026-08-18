@@ -25,3 +25,11 @@ team_name/
 └── models/
     └── RealESRGAN_x2_trained_generator.pth
 ```
+## Setup 
+```text
+%cd /content
+
+!git clone https://github.com/xinntao/Real-ESRGAN.git
+
+%cd /content/Real-ESRGAN
+```
