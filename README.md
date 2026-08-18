@@ -12,10 +12,17 @@ College : National Institute of Technology Puducherry
 # Approach
 # Results
 # Repository Structure
+# Real-ESRGAN x2 Image Restoration
+
+## Repository Structure
+
+```text
 Fourmidables-453/
+│
 ├── run.py
 ├── requirements.txt
 ├── README.md
+│
 └── models/
     └── RealESRGAN_x2_trained_generator.pth
 # Requirements
