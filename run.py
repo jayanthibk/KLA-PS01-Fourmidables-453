@@ -343,14 +343,16 @@ class RRDBNet(nn.Module):
 # ============================================================
 # NPY -> PNG
 #
-# This reproduces the user's supplied NPY-to-PNG conversion.
+# Uses the SAME conversion logic as the user's working
+# folder-based NPY -> PNG code:
 #
-# The PNG is created in memory, not left as an extra file.
-# Then PIL opens that PNG and converts it to RGB exactly like:
-#
-# Image.open(...).convert("RGB")
-#
-# This avoids changing the input data path compared with Colab.
+# 1. Load NPY
+# 2. Convert to float32
+# 3. Get min/max
+# 4. Normalize using:
+#       (data - min) / (max - min)
+# 5. Convert to uint8 [0,255]
+# 6. Create PNG in memory
 # ============================================================
 
 def npy_to_png_bytes(npy_path):
@@ -359,139 +361,114 @@ def npy_to_png_bytes(npy_path):
     # Load NPY
     # --------------------------------------------------------
 
-    arr = np.load(
-        npy_path,
-        allow_pickle=False
-    )
+    try:
+        data = np.load(
+            npy_path,
+            allow_pickle=False
+        )
 
-    # Remove dimensions of size 1
-    arr = np.squeeze(arr)
-
-    # --------------------------------------------------------
-    # Shape handling
-    # --------------------------------------------------------
-
-    if arr.ndim == 2:
-
-        # Grayscale
-        pass
-
-    elif arr.ndim == 3:
-
-        # CHW -> HWC
-        if (
-            arr.shape[0] in [1, 3, 4]
-            and arr.shape[2] not in [1, 3, 4]
-        ):
-            arr = np.transpose(
-                arr,
-                (1, 2, 0)
-            )
-
-        elif arr.shape[2] == 1:
-
-            arr = arr[:, :, 0]
-
-    else:
-
+    except Exception as e:
         raise ValueError(
-            f"Unsupported NPY shape: {arr.shape}"
+            f"ERROR reading NPY file: {npy_path}\n{e}"
         )
 
     # --------------------------------------------------------
     # Convert to float32
     # --------------------------------------------------------
 
-    if arr.dtype != np.uint8:
+    data = data.astype(np.float32)
 
-        arr = arr.astype(
-            np.float32
+    # --------------------------------------------------------
+    # Get image information
+    # --------------------------------------------------------
+
+    data_min = np.min(data)
+    data_max = np.max(data)
+    data_range = data_max - data_min
+
+    print(f"NPY: {os.path.basename(npy_path)}")
+    print(f"Shape : {data.shape}")
+    print(f"Min   : {data_min}")
+    print(f"Max   : {data_max}")
+    print(f"Range : {data_range}")
+
+    # --------------------------------------------------------
+    # Handle image dimensions
+    # --------------------------------------------------------
+
+    # Example:
+    # (128,128,1) -> (128,128)
+
+    if data.ndim == 3 and data.shape[-1] == 1:
+
+        data = np.squeeze(
+            data,
+            axis=-1
         )
 
-        # ----------------------------------------------------
-        # Remove NaN / Inf
-        # ----------------------------------------------------
+    # Example:
+    # (1,128,128) -> (128,128)
 
-        arr = np.nan_to_num(
-            arr,
-            nan=0.0,
-            posinf=255.0,
-            neginf=0.0
-        )
+    elif data.ndim == 3 and data.shape[0] == 1:
 
-        # ----------------------------------------------------
-        # Normalize exactly according to supplied code
-        # ----------------------------------------------------
-
-        min_val = arr.min()
-        max_val = arr.max()
-
-        if min_val >= 0 and max_val <= 1:
-
-            # [0,1] -> [0,255]
-            arr = arr * 255.0
-
-        elif min_val >= 0 and max_val <= 255:
-
-            # Already [0,255]
-            pass
-
-        else:
-
-            # Arbitrary range -> [0,255]
-            if max_val > min_val:
-
-                arr = (
-                    (arr - min_val)
-                    /
-                    (max_val - min_val)
-                ) * 255.0
-
-            else:
-
-                arr = np.zeros_like(arr)
-
-        arr = np.clip(
-            arr,
-            0,
-            255
-        ).astype(
-            np.uint8
+        data = np.squeeze(
+            data,
+            axis=0
         )
 
     # --------------------------------------------------------
-    # Create PIL image exactly as supplied conversion
+    # Make sure the resulting image is valid
     # --------------------------------------------------------
 
-    if arr.ndim == 2:
+    if data.ndim not in [2, 3]:
 
-        image = Image.fromarray(
-            arr,
-            mode="L"
+        raise ValueError(
+            f"Unsupported NPY shape after squeezing: {data.shape}"
         )
 
-    elif arr.ndim == 3 and arr.shape[2] == 3:
+    # --------------------------------------------------------
+    # Normalize to 0-255
+    #
+    # THIS IS THE SAME LOGIC AS YOUR FIRST CODE
+    # --------------------------------------------------------
 
-        image = Image.fromarray(
-            arr,
-            mode="RGB"
-        )
+    if data_max > data_min:
 
-    elif arr.ndim == 3 and arr.shape[2] == 4:
-
-        image = Image.fromarray(
-            arr,
-            mode="RGBA"
+        data = (
+            (data - data_min)
+            /
+            (data_max - data_min)
         )
 
     else:
 
-        raise ValueError(
-            f"Unsupported array shape: {arr.shape}"
-        )
+        # Constant image
+        data = np.zeros_like(data)
 
     # --------------------------------------------------------
-    # Save PNG to memory
+    # Convert to uint8
+    # --------------------------------------------------------
+
+    data = data * 255.0
+
+    data = np.clip(
+        data,
+        0,
+        255
+    )
+
+    data = data.astype(
+        np.uint8
+    )
+
+    # --------------------------------------------------------
+    # Convert to PIL image
+    # --------------------------------------------------------
+
+    image = Image.fromarray(data)
+
+    # --------------------------------------------------------
+    # Save PNG into memory
     # --------------------------------------------------------
 
     buffer = io.BytesIO()
@@ -504,8 +481,6 @@ def npy_to_png_bytes(npy_path):
     buffer.seek(0)
 
     return buffer
-
-
 # ============================================================
 # PNG -> MODEL TENSOR
 #
@@ -1093,4 +1068,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
