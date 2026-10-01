@@ -8,7 +8,7 @@ Microscopic images used to detect semiconductor fabrication defects suffer from 
 |Selva Sundary M|selvasundary26@gmail.com|<br>
 |Giridharan M |giridharan7482@gmail.com| <br>
 
-College : National Institute of Technology Puducherry
+Institution : National Institute of Technology Puducherry
 # Problem 
 Challenge : Semiconductor inspection relies on microscopic images to identify critical defects. Speckle/Gaussian noise and 2×/4× spatial resolution loss can obscure fine structures, edges and defect-level details, reducing inspection reliability. Hence, restoring degraded semiconductor inspection images with high structural fidelity — reducing noise and recovering resolution without compromising critical defect details is essential.
 
